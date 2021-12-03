@@ -136,6 +136,7 @@ public class XWPFDocumentSearch {
 			});
 		});
 		results.determineUnmatchedKeywords(keywords);
+		results.setPercentageMatch(results.determinePercentageMatched());
 		return results;
 	}
 	

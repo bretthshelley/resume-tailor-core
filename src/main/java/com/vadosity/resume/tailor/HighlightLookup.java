@@ -20,7 +20,7 @@ public class HighlightLookup {
 			hightlightTextMap.put(STHighlightColor.DARK_MAGENTA.toString(), "ffffff");
 			hightlightTextMap.put(STHighlightColor.DARK_RED.toString(), "ffffff");
 			hightlightTextMap.put(STHighlightColor.DARK_YELLOW.toString(), "ffffff");
-			hightlightTextMap.put(STHighlightColor.GREEN.toString(),"000000");
+			hightlightTextMap.put(STHighlightColor.GREEN.toString(),"ffffff");
 			hightlightTextMap.put(STHighlightColor.LIGHT_GRAY.toString(),"000000");
 			hightlightTextMap.put(STHighlightColor.MAGENTA.toString(),"000000");
 			hightlightTextMap.put(STHighlightColor.RED.toString(), "ffffff");

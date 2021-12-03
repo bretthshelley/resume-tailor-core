@@ -17,6 +17,9 @@ public class KeywordMatchResults {
 	
 	private String outputFilename;
 	
+	private String percentageMatch;
+		
+	
 	public String getOutputFilename() {
 		return outputFilename;
 	}
@@ -25,6 +28,25 @@ public class KeywordMatchResults {
 		this.outputFilename = outputFilename;
 	}
 
+	public String determinePercentageMatched() {
+		int matchedCount = stats.keySet().size();
+		System.out.println("matched count: " + matchedCount);
+		int unmatchedCount = unmatchedKeywords.size();
+		System.out.println("unmatchedCount count: " + unmatchedCount);
+		if ( matchedCount==0) {
+			return "0 %";
+		}
+		if ( unmatchedCount==0 ) {
+			return "100 %";
+		}
+		double totalCount = matchedCount + unmatchedCount;
+		double percent = (matchedCount*1.0/totalCount)*100.0;
+		percent = Math.round(percent);
+		return percent+" %";		
+		
+	}
+	
+	
 	public void determineUnmatchedKeywords(List<String> keywordsSought) {
 		if ( keywordsSought==null || keywordsSought.isEmpty())
 		{
@@ -38,6 +60,7 @@ public class KeywordMatchResults {
 				unmatchedKeywords.add(sought);
 			}
 		});
+		
 	}
 
 		public void addResult(KeywordMatch keywordMatch)
@@ -92,5 +115,17 @@ public class KeywordMatchResults {
 		
 		return sortedMap;
 	}
+
+	public String getPercentageMatch() {
+		return percentageMatch;
+	}
+
+	public void setPercentageMatch(String percentageMatch) {
+		this.percentageMatch = percentageMatch;
+	}
+	
+	
+	
+	
 	
 }
