@@ -82,7 +82,8 @@ public class BulletTrimmer {
 	
 	public void trimBullets() {
 		if ( trimBulletsRequest==null ) return;
-		if ( keywordMatchResults.getMatches().isEmpty()) return;
+		
+		if ( keywordMatchResults==null || keywordMatchResults.getMatches().isEmpty()) return;
 		
 		final List<Integer> bodyElementsToRemove = new ArrayList<>();
 		

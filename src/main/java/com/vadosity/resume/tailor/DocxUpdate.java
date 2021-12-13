@@ -19,7 +19,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 public class DocxUpdate {
 
 	private KeywordMatchResults keywordMatchResults;
-	
+
 
 	public void updateDocument(File inFile, File outFile, DocxUpdateRequest docxUpdateRequest) throws IOException {
 		validateIOArguments(inFile, outFile);
@@ -61,18 +61,25 @@ public class DocxUpdate {
 
 	private void validateRequest(Object in, Object out, DocxUpdateRequest docxUpdateRequest) {
 
-		Optional.ofNullable(docxUpdateRequest)
-		.map(DocxUpdateRequest::keywordStyleRequest)
-		.map(KeywordStyleRequest::keywords)
-		.filter(list->!list.isEmpty())
-		.orElseThrow(()->new IllegalArgumentException("keywords missing"));
+		/// only validate the keyword style request if it is present
+		boolean keywordStyleRequestPresent = Optional.ofNullable(docxUpdateRequest)
+				.map(DocxUpdateRequest::keywordStyleRequest).isPresent();
 
-		boolean isHighlighted = docxUpdateRequest.keywordStyleRequest().highlightKeywords() 
-				|| docxUpdateRequest.keywordStyleRequest().highlightSentence();
-		if (isHighlighted ) {
-			String color = docxUpdateRequest.keywordStyleRequest().highlightColor();
-			/// throw an exception is the color is not valid
-			HighlightLookup.getMatchingHighlightColor(color);
+		if ( keywordStyleRequestPresent) {
+
+			Optional.ofNullable(docxUpdateRequest)
+			.map(DocxUpdateRequest::keywordStyleRequest)
+			.map(KeywordStyleRequest::keywords)
+			.filter(list->!list.isEmpty())
+			.orElseThrow(()->new IllegalArgumentException("keywords missing"));
+
+			boolean isHighlighted = docxUpdateRequest.keywordStyleRequest().highlightKeywords() 
+					|| docxUpdateRequest.keywordStyleRequest().highlightSentence();
+			if (isHighlighted ) {
+				String color = docxUpdateRequest.keywordStyleRequest().highlightColor();
+				/// throw an exception is the color is not valid
+				HighlightLookup.getMatchingHighlightColor(color);
+			}
 		}
 	}
 
@@ -104,7 +111,10 @@ public class DocxUpdate {
 		List<String> keywords = Optional.ofNullable( docxUpdateRequest)
 				.map(DocxUpdateRequest::keywordStyleRequest)
 				.map(KeywordStyleRequest::keywords).orElse(null);
-		if ( keywords==null ) return;
+		
+		if ( keywords==null ) {
+			keywords= new ArrayList<>();
+		};
 
 		KeywordStyleRequest keywordStyleRequest= docxUpdateRequest.keywordStyleRequest();
 
@@ -164,7 +174,6 @@ public class DocxUpdate {
 		List<Integer> bodyElementsToRemove = new ArrayList<>();
 
 		doc.getParagraphs().stream().forEach(pg->{
-			System.out.println(pg.getStyle());
 			if ( "ListParagraph".equals(pg.getStyle()))
 			{
 				int pos = doc.getBodyElements().indexOf(pg);
@@ -173,10 +182,6 @@ public class DocxUpdate {
 		});
 
 		Collections.reverse(bodyElementsToRemove);
-
-		//	bodyElementsToRemove.forEach(pos->{doc.removeBodyElement(pos);});
-
-
 
 	}
 

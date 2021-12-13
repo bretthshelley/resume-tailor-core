@@ -29,10 +29,10 @@ public class KeywordMatchResults {
 	}
 
 	public String determinePercentageMatched() {
+		if (stats.isEmpty() && matches.isEmpty()) return "0 %"; 
+		
 		int matchedCount = stats.keySet().size();
-		System.out.println("matched count: " + matchedCount);
 		int unmatchedCount = unmatchedKeywords.size();
-		System.out.println("unmatchedCount count: " + unmatchedCount);
 		if ( matchedCount==0) {
 			return "0 %";
 		}
