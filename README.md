@@ -1,11 +1,11 @@
 The resume-tailor-core library is a pure Java 16 api that interfaces primarily with the Apache POI Apis to modify word documents. 
 
 
-##To build locally:
+To build locally:
 	
 	gradle clean build
 
-##Functionality Includes:
+Functionality Includes:
 
 - Attachment Handling  and File I/O
 
