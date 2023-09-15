@@ -33,7 +33,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.vadosity'
             artifactId = 'resume-tailor-core'
-            version = '1.0'
+            version = '1.1'
             from components.java
         }
     }
@@ -43,10 +43,10 @@ publishing {
 
 jar {
     manifest{
-        attributes ("Fw-Version" : "1.0.0")
+        attributes ("Fw-Version" : "1.1.0")
     }
     baseName 'resume-tailor-core'
-    version '1.0' 
+    version '1.1' 
 }
 
 tasks.named('test') {
